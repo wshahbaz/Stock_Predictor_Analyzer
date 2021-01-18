@@ -11,6 +11,9 @@ from keras.models import Sequential
 from keras.layers import LSTM,Dropout,Dense
 
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import mean_squared_error
+from math import sqrt
+
 scaler=MinMaxScaler(feature_range=(0,1))
 
 df=pd.read_csv("NSE-TATA.csv")
@@ -87,6 +90,12 @@ print(valid_data)
 
 print("training dataset")
 print(train_data)
+
+mse = mean_squared_error(valid_data['Close'], valid_data['Predictions'], squared=False)
+rmse = sqrt(mse)
+
+print("mse: ", mse)
+print("rmse: ", rmse)
 
 # valid_data.loc[:,('Predictions')]=predicted_closing_price
 plt.plot(train_data["Close"], label="Closing Prices (Training)")
